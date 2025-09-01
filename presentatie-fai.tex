@@ -1,0 +1,121 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[dutch]{babel}
+\usepackage{keystroke}
+
+\usepackage{hyperref}
+% colored links
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+
+%------------------------------------------------------------
+%This block of code defines the information to appear in the
+%Title page
+\title[\LaTeX{} beamer sjabloon] %optional
+{Een lege \LaTeX{} beamer presentatie}
+
+% \subtitle{A short story}
+
+\author[S.L.Speek] % (optional)
+{Steven L. Speek}
+
+\institute[NLLGG] % (optional)
+{
+  Nederlandse Linux Gebruikers Groep 
+}
+
+\date[\today{}] % (optional)
+{\today{}}
+
+\logo{\includegraphics[height=1cm]{img/nllgg-logo.jpg}}
+
+%End of title page configuration block
+%------------------------------------------------------------
+
+
+
+%------------------------------------------------------------
+%The next block of commands puts the table of contents at the 
+%beginning of each section and highlights the current section:
+
+% \AtBeginSection[]
+% {
+%   \begin{frame}<handout:0>
+%     \frametitle{Inhoudsopgave}
+%     \tableofcontents[currentsection]
+%   \end{frame}
+% }
+\newif\iflattersubsect
+
+\AtBeginSection[] {
+    \begin{frame}<beamer>
+      \frametitle{Inhoudsopgave}
+      \tableofcontents[currentsection]
+     \end{frame}
+    \lattersubsectfalse
+}
+
+\AtBeginSubsection[] {
+    \iflattersubsect
+    \begin{frame}<beamer>
+      \frametitle{Inhoudsopgave}
+      \tableofcontents[currentsubsection]
+    \end{frame}
+    \fi
+    \lattersubsecttrue
+}
+%------------------------------------------------------------
+
+
+\begin{document}
+
+%The next statement creates the title page.
+\frame{\titlepage}
+
+
+%---------------------------------------------------------
+%This block of code is for the table of contents after
+%the title page
+\begin{frame}
+\frametitle{Inhoudsopgave}
+\tableofcontents
+\end{frame}
+%---------------------------------------------------------
+
+
+\section{Over mij}
+
+%---------------------------------------------------------
+\begin{frame}
+\frametitle{Steven L. Speek}
+\begin{itemize}
+  \item Actief bij \href{https://linux020.nl/}{Linux\textsuperscript{020}}
+  \item Ontwikkelaar in Python en Java  
+  \item Linux netwerkbeheerder
+  \item Docent Linux
+  \item Github: \url{https://github.com/slspeek}
+  \item Hardloper: Volg mij op \href{https://www.strava.com/athletes/123214921}{Strava}
+\end{itemize}
+
+\end{frame}
+%---------------------------------------------------------
+\section{Over deze presentatie}
+
+\begin{frame}
+\frametitle{Over deze presentatie}
+\begin{itemize}
+  \item Gemaakt met \href{https://nl.mirrors.cicku.me/ctan/macros/latex/contrib/beamer/doc/beameruserguide.pdf}{\LaTeX{} beamer}
+  \item Broncode: \url{https://github.com/slspeek/presentatie-fai}
+  \item PDFs: \url{https://github.com/slspeek/presentatie-fai/releases/latest}
+\end{itemize}
+
+\end{frame}
+
+
+\end{document}

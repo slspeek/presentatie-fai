@@ -1,0 +1,24 @@
+name: Print
+
+on: push
+
+env:
+  MAINNAME: presentatie-fai
+  
+jobs:
+  print:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Run makefile
+        run: make handout beamer
+      - name: Release generated pdfs
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            ${{ env.MAINNAME }}-beamer.pdf
+            ${{ env.MAINNAME }}-handout.pdf
+
+            
