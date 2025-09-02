@@ -2,7 +2,7 @@ MAINNAME=presentatie-fai
 HANDOUT_NAME=$(MAINNAME)-handout
 BEAMER_NAME=$(MAINNAME)-beamer
 LATEX_IMAGE=leplusorg/latex:sha-4a17317
-PDFLATEX=docker run --rm -t --workdir=/tmp --user="$(shell id -u):$(shell id -g)" --net=none  -v "$(shell pwd):/tmp"  $(LATEX_IMAGE) pdflatex
+PDFLATEX=docker run --rm -t --workdir=/tmp --user="$(shell id -u):$(shell id -g)" --net=none  -v "$(shell pwd):/tmp"  $(LATEX_IMAGE) pdflatex --interaction batchmode
 BEAMER=$(PDFLATEX) -jobname=$(BEAMER_NAME) $(MAINNAME).tex
 HANDOUT=$(PDFLATEX) -jobname=$(HANDOUT_NAME) "\PassOptionsToClass{handout}{beamer}\input{$(MAINNAME)}"
 

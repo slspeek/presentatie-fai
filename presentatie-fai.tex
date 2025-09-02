@@ -2,6 +2,10 @@
 \usepackage[utf8]{inputenc}
 \usepackage[dutch]{babel}
 \usepackage{keystroke}
+\usepackage{booktabs}
+\usepackage{bbding} 
+\usepackage{datetime}
+\newdate{date}{20}{09}{2025}
 
 \usepackage{hyperref}
 % colored links
@@ -13,14 +17,16 @@
 
 \usetheme{Madrid}
 \usecolortheme{default}
-
+% \setbeamercolor{frametitle}{bg=orange,fg=black}
+\definecolor{NLLGGOrange}{RGB}{255,146,10}
+\setbeamercolor{title}{bg=NLLGGOrange,fg=black}
+\setbeamercolor{frametitle}{bg=NLLGGOrange,fg=black}
+\setbeamercolor{structure}{fg=NLLGGOrange}
 %------------------------------------------------------------
 %This block of code defines the information to appear in the
 %Title page
-\title[\LaTeX{} beamer sjabloon] %optional
-{Een lege \LaTeX{} beamer presentatie}
-
-% \subtitle{A short story}
+\title[Fully Automatic Install] %optional
+{Fully Automatic Installation (FAI)}
 
 \author[S.L.Speek] % (optional)
 {Steven L. Speek}
@@ -30,8 +36,8 @@
   Nederlandse Linux Gebruikers Groep 
 }
 
-\date[\today{}] % (optional)
-{\today{}}
+% \date[\today{}] {\today{}}
+\date{\displaydate{date}}
 
 \logo{\includegraphics[height=1cm]{img/nllgg-logo.jpg}}
 
@@ -95,6 +101,7 @@
 \begin{frame}
 \frametitle{Steven L. Speek}
 \begin{itemize}
+  \item Debian gebruiker sinds Sarge (2005)
   \item Actief bij \href{https://linux020.nl/}{Linux\textsuperscript{020}}
   \item Ontwikkelaar in Python en Java  
   \item Linux netwerkbeheerder
@@ -105,14 +112,138 @@
 
 \end{frame}
 %---------------------------------------------------------
+\section{Probleemstelling}
+\begin{frame}
+\frametitle{Probleemstelling}
+Na een Linux installatie ga je telkens een paar dingetjes aanpassen:
+\begin{itemize}
+  \item Upstream Firefox installeren
+  \item Mattermost installeren
+  \item Elements installeren
+  \item VLC installeren
+  \item Gnome Tweaks installeren
+  \item Mooie BASH prompt, met foutmeldingen, configureren
+  \item Sneltoetsen instellen
+  \item Mooie background instellen
+  \item Enzovoorts
+\end{itemize}
+Dit kost tijd, en is foutgevoelig. Bovendien had je in die tijd uitleg kunnen geven over Linux.
+\end{frame}
+\section{Oplossingen}
+\begin{frame}
+\frametitle{Oplossingen}
+Voor Debian gebaseerde systemen zijn er een paar oplossingen:
+\begin{itemize}
+  \item \href{https://wiki.debian.org/DebianInstaller/Preseed}{Preseed} 
+  \begin{itemize}
+    \item Eenvoudig
+    \item Beperkt
+    \item Alleen voor installatie
+    \item \href{https://slspeek.github.io/debian/}{Mijn preseed bestanden}
+  \end{itemize}
+  \item \href{https://fai-project.org/}{FAI - Fully Automatic Installation}
+  \begin{itemize}
+     \item Zeer volwassen project
+     \item Goed ontwerp
+     \item \href{https://slspeek.github.io/fai/}{Mijn FAI configuratie}
+     \item \href{https://slspeek.github.io/fai-cmds/}{Mijn FAI commando's} 
+  \end{itemize}
+  \item \href{https://ansible.com/}{Ansible}
+  \begin{itemize}
+     \item Heel flexibel
+     \item Niet specifiek voor Debian
+     \item Niet specifiek voor installatie
+     \item Vereist SSH toegang
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\subsection{Vergelijking Preseed en FAI}
+\begin{frame}
+\frametitle{Vergelijking van mijn Preseed en FAI}
+\begin{table} % [htbp] suggests placement options: here, top, bottom, page
+    \centering % Centers the table on the page
+    \caption{Vergelijking} % Table caption
+
+    \begin{tabular}{lccccc} % Defines column alignment: l=left, c=center, r=right
+        \toprule % Top rule (from booktabs package)
+        \textbf{Oplossing} & \textbf{Auto} & \textbf{Multiboot} & \textbf{User} & \textbf{Live}  & \textbf{Live persistentie}\\
+        \midrule % Mid rule (from booktabs package)
+        Mijn preseed & \XSolid & \Checkmark & \Checkmark & \Checkmark & \Checkmark \\
+        FAI & \Checkmark & \XSolid & \XSolid & \Checkmark & \XSolid \\
+        \bottomrule % Bottom rule (from booktabs package)
+    \end{tabular}
+\end{table}
+\end{frame}
+
+\subsection{Motivatie FAI}
+\begin{frame}
+\frametitle{Motivatie voor FAI}
+Nadelen van \href{https://slspeek.github.io/debian/}{Mijn Preseed}:
+\begin{itemize}
+  \item Bestanden meegeven moeilijk
+  \item Moeilijk uitbreidbaar
+  \item Amateuristische herbouw van FAI
+  \item Geen scheiding mechaniek en configuratie
+  \item Geen i18n
+  \item Live en installatie zijn niet hetzelfde
+\end{itemize}
+Voordelen van FAI:
+\begin{itemize}
+  \item Goed ontwerp
+  \item Zeer uitgebreid
+  \item Actief project
+  \item Veel voorbeelden
+\end{itemize}
+\end{frame}
+
+\subsection{Maanschot idee}
+\begin{frame}
+\frametitle{Maanschot idee}
+Draai FAI vanuit het late-command in een preseed.
+\centering
+\includegraphics[width=0.5\textwidth]{img/Cartoon_space_rocket.png}<1->
+\end{frame}
+
+\section{Overzicht FAI}
+
+\subsection{Wat is FAI?}
+\begin{frame}
+\frametitle{Wat is FAI?}
+\begin{itemize}
+  \item Fully Automatic Installation
+  \item Automatische installatie van Linux systemen
+  \item Debian, Ubuntu, Mint, CentOS, Rocky Linux, AlmaLinux, ...
+  \item Netwerk installatie
+  \item Live installatie
+  \item Herinstallatie
+  \item USB installatie
+  \item Chroot installatie
+\end{itemize}
+\end{frame}
+
+\subsection{Architectuur}
+\begin{frame}
+\frametitle{Architectuur}
+\begin{itemize}
+  \item FAI software
+  \item FAI configuratie
+\end{itemize}
+\end{frame}
+
 \section{Over deze presentatie}
 
 \begin{frame}
 \frametitle{Over deze presentatie}
 \begin{itemize}
-  \item Gemaakt met \href{https://nl.mirrors.cicku.me/ctan/macros/latex/contrib/beamer/doc/beameruserguide.pdf}{\LaTeX{} beamer}
   \item Broncode: \url{https://github.com/slspeek/presentatie-fai}
   \item PDFs: \url{https://github.com/slspeek/presentatie-fai/releases/latest}
+  \item Gemaakt met \href{https://nl.mirrors.cicku.me/ctan/macros/latex/contrib/beamer/doc/beameruserguide.pdf}{\LaTeX{} beamer}
+  \item Experimenteren met \LaTeX{} beamer: \url{https://github.com/slspeek/empty-latex-beamer}
+  \begin{itemize}
+    \item Productie van PDFs via \LaTeX{} dockerimage
+    \item Github Actions workflow met releases
+  \end{itemize}
 \end{itemize}
 
 \end{frame}
