@@ -22,6 +22,10 @@
 \setbeamercolor{title}{bg=NLLGGOrange,fg=black}
 \setbeamercolor{frametitle}{bg=NLLGGOrange,fg=black}
 \setbeamercolor{structure}{fg=NLLGGOrange}
+
+\newcommand{\light}[1]{\textcolor{gray}{#1}}
+
+
 %------------------------------------------------------------
 %This block of code defines the information to appear in the
 %Title page
@@ -205,29 +209,120 @@ Draai FAI vanuit het late-command in een preseed.
 \includegraphics[width=0.5\textwidth]{img/Cartoon_space_rocket.png}<1->
 \end{frame}
 
-\section{Overzicht FAI}
-
-\subsection{Wat is FAI?}
+\section{Wat is FAI?}
 \begin{frame}
 \frametitle{Wat is FAI?}
 \begin{itemize}
   \item Fully Automatic Installation
   \item Automatische installatie van Linux systemen
-  \item Debian, Ubuntu, Mint, CentOS, Rocky Linux, AlmaLinux, ...
+  \item \textbf{Debian}, Ubuntu, Mint, CentOS, Rocky Linux, AlmaLinux, ...
   \item Netwerk installatie
-  \item Live installatie
+  \item \textbf{Live installatie}
   \item Herinstallatie
-  \item USB installatie
+  \item \textbf{USB installatie}
   \item Chroot installatie
 \end{itemize}
 \end{frame}
 
-\subsection{Architectuur}
+\section{FAI componenten}
 \begin{frame}
-\frametitle{Architectuur}
+\frametitle{FAI componenten}
 \begin{itemize}
   \item FAI software
+  \begin{itemize}
+    \item Canoniek \url{https://fai-project.org}
+    \item Persoonlijk \url{https://github.com/slspeek/fai-cmds}
+  \end{itemize}
   \item FAI configuratie
+  \begin{itemize}
+    \item Canoniek \url{https://github.com/faiproject/fai-config}
+    \item Persoonlijk \url{https://slspeek.github.io/fai/}
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\section{Classes: Dingetjes automatiseren in FAI}
+\begin{frame}
+\frametitle{Dingetjes automatiseren in FAI}
+Een \textbf{CLASS} kan bestaan uit:
+\begin{itemize} 
+  \item Verseisten dat bepaalde CLASSES zijn gedraaid
+  \item Pakketten lijst
+  \item Antwoorden op debconf vragen
+  \item (Configuratie) bestanden
+  \item Scripts
+  \item<2-> Hooks
+  \begin{itemize}
+    \item Script dat voor een bepaalde FAI-fase wordt gedraaid
+    \begin{itemize}
+      \item Bijvoorbeeld \texttt{instsoft} om voordat de pakketten worden geïnstalleerd iets te doen
+      \end{itemize}
+  \end{itemize}
+  \item<3-> \light{Lokale pakketten}
+  \item<3-> \light{Variabelen}
+  \item<3-> \light{Disklayout}
+  \item<3-> \light{Tests}
+\end{itemize}
+\end{frame}
+
+\section{Configuratie nader bezien}
+\begin{frame}
+\frametitle{Configuratie nader bezien}
+Configuratie is een map met:
+\begin{itemize}
+  \item \texttt{classes/} - Klasse variabelen en afhankelijkheden
+  \item<2-> \texttt{package\_config/}  Pakketten lijsten
+  \item<3-> \texttt{files/} - (Configuratie) bestanden
+  \item<4-> \texttt{scripts/} - Scripts
+  \item<5-> \texttt{hooks/} - Hooks
+  \item<6-> \light{\texttt{debconf/} - Debconf antwoorden}
+  \item<6-> \light{\texttt{disk\_config/} - Disklayouts}
+  \item<6-> \light{\texttt{basefiles/} - Basis bestanden archief}
+  \item<6-> \light{\texttt{pkgs/} - Lokale pakketten}
+  \item<6-> \light{\texttt{tests/} - Tests}
+\end{itemize}
+\end{frame}
+
+\section{FAI fasen}
+\begin{frame}
+\frametitle{FAI fasen}
+\begin{itemize}
+  \item \light{\textsc{confdir} - get the config space}
+  \item \light{\textsc{setup}                 - some initialization, start sshd on demand}
+  \item \textsc{defclass}              - define FAI classes
+  \item \textsc{defvar}                - define variables
+  \item \light{\textsc{action}                - evaluate FAI\_ACTION}
+  \item \light{\textsc{install}               - Start the installation}
+  \item \textsc{partition}             - partition the harddisks, create file systems
+  \item \light{\textsc{mountdisks}            - mount the file systems}
+  \item \light{\textsc{extrbase}              - extract the base.tar.xz}
+  \item \textsc{debconf}               - do the Debian debconf preseeding
+  \item \light{\textsc{repository}            - prepare access to the package repository}
+  \item \light{\textsc{updatebase}            - Set up package tools and update packages}
+  \item \textbf{\textsc{instsoft}              - install software packages}
+  \item \textbf{\textsc{configure}             - call customization scripts}
+  \item \light{\textsc{finish}                - do some cleanup, show installation statistics}
+  \item \textsc{tests}                 - call tests if defined
+  \item \light{\textsc{chboot}                - call fai-chboot on the install server}
+  \item \light{\textsc{savelog}               - save log files to local and remote location}
+  \item \light{\textsc{faiend}                - reboot host, eject CD if needed}
+\end{itemize}
+\end{frame}
+
+\section{Voorbeeld FANCY\_BASH\_PROMPT}
+\begin{frame}[fragile]
+\frametitle{Voorbeeld FANCY\_BASH\_PROMPT}
+ 
+\textbf{Probleem:} \texttt{/etc/bash.bashrc} moet worden aangepast
+
+\onslide<2->{\textbf{Oplossing:}}
+\begin{itemize}
+  \item<2-> Maak een bestand \texttt{files/etc/bash.bashrc/FANCY\_BASH\_PROMPT} met de aanpassingen
+  \item<3-> Maak een script \texttt{scripts/FANCY\_BASH\_PROMPT/10-copy-file} met:
+  \begin{verbatim}#!/bin/bash
+fcopy -M /etc/bash.bashrc
+  \end{verbatim} 
+   
 \end{itemize}
 \end{frame}
 
@@ -245,16 +340,15 @@ Draai FAI vanuit het late-command in een preseed.
     \item Github Actions workflow met releases
   \end{itemize}
 \end{itemize}
-
 \end{frame}
 
 \section{Vragen}
 \begin{frame}
 \frametitle{Vragen?}
 \begin{itemize}
-  \item<2-> Vragen?
-  \item<3-> Opmerkingen?
-  \item<4-> Verbeteringen?
+  \item Vragen?
+  \item<2-> Opmerkingen?
+  \item<3-> Verbeteringen?
 \end{itemize}
 \end{frame}
 
