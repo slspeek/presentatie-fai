@@ -162,7 +162,6 @@ Voor Debian gebaseerde systemen zijn er een paar oplossingen:
 \end{itemize}
 \end{frame}
 
-\subsection{Vergelijking Preseed en FAI}
 \begin{frame}
 \frametitle{Vergelijking van mijn Preseed en FAI}
 \begin{table} % [htbp] suggests placement options: here, top, bottom, page
@@ -180,7 +179,6 @@ Voor Debian gebaseerde systemen zijn er een paar oplossingen:
 \end{table}
 \end{frame}
 
-\subsection{Motivatie FAI}
 \begin{frame}
 \frametitle{Motivatie voor FAI}
 Nadelen van \href{https://slspeek.github.io/debian/}{Mijn Preseed}:
@@ -201,7 +199,6 @@ Voordelen van FAI:
 \end{itemize}
 \end{frame}
 
-\subsection{Maanschot idee}
 \begin{frame}
 \frametitle{Maanschot idee}
 Draai FAI vanuit het late-command in een preseed.
@@ -287,29 +284,35 @@ Configuratie is een map met:
 \begin{frame}
 \frametitle{FAI fasen}
 \begin{itemize}
-  \item \light{\textsc{confdir} - get the config space}
-  \item \light{\textsc{setup}                 - some initialization, start sshd on demand}
-  \item \textsc{defclass}              - define FAI classes
-  \item \textsc{defvar}                - define variables
-  \item \light{\textsc{action}                - evaluate FAI\_ACTION}
-  \item \light{\textsc{install}               - Start the installation}
-  \item \textsc{partition}             - partition the harddisks, create file systems
-  \item \light{\textsc{mountdisks}            - mount the file systems}
-  \item \light{\textsc{extrbase}              - extract the base.tar.xz}
-  \item \textsc{debconf}               - do the Debian debconf preseeding
-  \item \light{\textsc{repository}            - prepare access to the package repository}
-  \item \light{\textsc{updatebase}            - Set up package tools and update packages}
-  \item \textbf{\textsc{instsoft}              - install software packages}
-  \item \textbf{\textsc{configure}             - call customization scripts}
-  \item \light{\textsc{finish}                - do some cleanup, show installation statistics}
-  \item \textsc{tests}                 - call tests if defined
-  \item \light{\textsc{chboot}                - call fai-chboot on the install server}
-  \item \light{\textsc{savelog}               - save log files to local and remote location}
-  \item \light{\textsc{faiend}                - reboot host, eject CD if needed}
+  \item<2-> \light{\textsc{confdir} - get the config space}
+  \item<2-> \light{\textsc{setup}                 - some initialization, start sshd on demand}
+  \item<2-> \textsc{defclass}              - define FAI classes
+  \item<2-> \textsc{defvar}                - define variables
+  \item<3-> \light{\textsc{action}                - evaluate FAI\_ACTION}
+  \item<3-> \light{\textsc{install}               - Start the installation}
+  \item<3-> \textsc{partition}             - partition the harddisks, create file systems
+  \item<4-> \light{\textsc{mountdisks}            - mount the file systems}
+  \item<4-> \light{\textsc{extrbase}              - extract the base.tar.xz}
+  \item<4-> \textsc{debconf}               - do the Debian debconf preseeding
+  \item<5-> \light{\textsc{repository}            - prepare access to the package repository}
+  \item<5-> \light{\textsc{updatebase}            - Set up package tools and update packages}
 \end{itemize}
 \end{frame}
 
-\section{Voorbeeld FANCY\_BASH\_PROMPT}
+\begin{frame}
+\frametitle{FAI fasen (vervolg)}
+\begin{itemize}
+  \item \textbf{\textsc{instsoft}              - install software packages}
+  \item<2-> \textbf{\textsc{configure}             - call customization scripts}
+  \item<3-> \light{\textsc{finish}                - do some cleanup, show installation statistics}
+  \item<3-> \textsc{tests}                 - call tests if defined
+  \item<3-> \light{\textsc{chboot}                - call fai-chboot on the install server}
+  \item<3-> \light{\textsc{savelog}               - save log files to local and remote location}
+  \item<3-> \light{\textsc{faiend}                - reboot host, eject CD if needed}
+\end{itemize}
+\end{frame}
+
+\section{Voorbeelden}
 \begin{frame}[fragile]
 \frametitle{Voorbeeld FANCY\_BASH\_PROMPT}
  
@@ -322,6 +325,47 @@ Configuratie is een map met:
   \begin{verbatim}#!/bin/bash
 fcopy -M /etc/bash.bashrc
   \end{verbatim} 
+   
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Voorbeeld UNATTENDED\_UPGRADES}
+ 
+\textbf{Probleem:} 
+\begin{itemize}
+  \item Pakket \texttt{unattended-upgrades} moet worden geïnstalleerd
+  \item Onbeheerde updates moeten worden ingeschakeld
+  \item Configuratie om van alle bronnen updates te accepteren
+\end{itemize}
+
+\onslide<2->{\textbf{Oplossing:}}
+\begin{itemize}
+  \item<2-> Maak een bestand \texttt{package\_config/UNATTENDED\_UPGRADES} met:
+  \begin{verbatim}PACKAGES install
+unattended-upgrades
+  \end{verbatim} 
+  \item<3-> Maak een bestand \texttt{files/debconf/UNATTENDED\_UPGRADES} met:
+  \begin{verbatim}unattended-upgrades \
+    unattended-upgrades/enable_auto_updates \
+      boolean true
+  \end{verbatim}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Voorbeeld UNATTENDED\_UPGRADES (vervolg)}
+\onslide{\textbf{Oplossing (vervolg):}}
+\begin{itemize}
+  \item<2-> Maak een bestand \texttt{files/etc/apt/apt.conf.d/\textbackslash} \texttt{52unattended-upgrades-local/UNATTENDED\_UPGRADES} met de configuratie
+  \begin{verbatim}Unattended-Upgrade::Origins-Pattern {
+        "origin=*";
+ };
+  \end{verbatim}
+  \item<3-> Maak een script \texttt{scripts/UNATTENDED\_UPGRADES/10-configuration} met:
+  \begin{verbatim}#!/bin/bash
+fcopy /apt/apt.conf.d/52unattended-upgrades-local
+  \end{verbatim}
    
 \end{itemize}
 \end{frame}
