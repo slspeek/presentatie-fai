@@ -245,7 +245,7 @@ Een \textbf{CLASS} kan bestaan uit:
 \begin{itemize} 
   \item Verseisten dat bepaalde CLASSES zijn gedraaid
   \item Pakketten lijst
-  \item Antwoorden op debconf vragen
+  \item Antwoorden op \href{https://wiki.debian.org/PackageManagement/Preseed}{debconf vragen}
   \item (Configuratie) bestanden
   \item Scripts
   \item<2-> Hooks
@@ -313,6 +313,7 @@ Configuratie is een map met:
 \end{frame}
 
 \section{Voorbeelden}
+
 \begin{frame}[fragile]
 \frametitle{Voorbeeld FANCY\_BASH\_PROMPT}
  
@@ -357,7 +358,7 @@ unattended-upgrades
 \frametitle{Voorbeeld UNATTENDED\_UPGRADES (vervolg)}
 \onslide{\textbf{Oplossing (vervolg):}}
 \begin{itemize}
-  \item<2-> Maak een bestand \texttt{files/etc/apt/apt.conf.d/\textbackslash} \texttt{52unattended-upgrades-local/UNATTENDED\_UPGRADES} met de configuratie
+  \item<2-> Maak een bestand \texttt{files/etc/apt/apt.conf.d/\symbol{92}} \texttt{52unattended-upgrades-local/UNATTENDED\_UPGRADES} met de configuratie
   \begin{verbatim}Unattended-Upgrade::Origins-Pattern {
         "origin=*";
  };
@@ -366,8 +367,72 @@ unattended-upgrades
   \begin{verbatim}#!/bin/bash
 fcopy /apt/apt.conf.d/52unattended-upgrades-local
   \end{verbatim}
-   
 \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Voorbeeld MATTERMOST}
+\textbf{Probleem:} 
+Je wilt Mattermost installeren, maar het zit niet standaard in Debian. Gelukkig heeft \texttt{extrepo} een bron hiervoor
+
+\onslide<2->{\textbf{Conceptuele oplossing:}}
+\begin{itemize}
+  \item<3-> Installeer \texttt{extrepo}
+  \item<4-> Voeg de Mattermost bron toe
+  \item<5-> Installeer het pakket
+\end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{Voorbeeld MATTERMOST (vervolg)}
+\textbf{Concrete oplossing:}
+\begin{itemize}
+  \item<2-> Maak een bestand \texttt{class/MATTERMOST.deps} met:
+  \begin{verbatim}EXTREPO
+  \end{verbatim}
+  \item<3-> Maak een bestand \texttt{hooks/instsoft.MATTERMOST} met de inhoud:
+  \begin{verbatim}#! /bin/bash
+$ROOTCMD extrepo enable mattermost
+$ROOTCMD apt-get update
+  \end{verbatim}
+  \item<4-> Maak een bestand \texttt{package\_config/MATTERMOST} met:
+  \begin{verbatim}PACKAGES install
+mattermost-desktop
+\end{verbatim} 
+  \end{itemize}
+\end{frame}
+
+\section{Profielen}
+
+\begin{frame}
+\frametitle{Profielen}
+Een profiel heeft:
+\begin{itemize}
+  \item<2-> Naam
+  \item<3-> Beschrijving
+  \item<4-> Een \textbf{geordende} lijst van \textbf{classes}
+\end{itemize}
+
+\onslide<5->{Profielen kunnen zijn voor:}
+  \begin{itemize}
+    \item<5-> Desktop
+    \item<5-> Server
+    \item<5-> Laptop
+    \item<5-> Specifiek voor een gebruiker
+    \item<5-> Specifiek voor een groep gebruikers
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Voorbeeld profiel `Gnome developer'}
+Inhoud van het bestand \texttt{class/gnome-developer.profile}:
+\begin{verbatim}
+Name: Gnome developer
+Description: Gnome desktop met developer tools
+(...)
+Classes: INSTALL FAIBASE DEBIAN DUTCH CONSOLE_TWEAKS \
+  ADVANCED_CLI_TOOLS TUX GNOME_CORE BACKGROUND \
+  FIREFOX MATTERMOST DEVELOPER 
+\end{verbatim}
 \end{frame}
 
 \section{Over deze presentatie}
