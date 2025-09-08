@@ -235,6 +235,11 @@ Draai FAI vanuit het late-command in een preseed.
     \item Canoniek \url{https://github.com/faiproject/fai-config}
     \item Persoonlijk \url{https://slspeek.github.io/fai/}
   \end{itemize}
+  \item FAI Installatie live systemen
+  \begin{itemize}
+    \item \texttt{nfsroot}
+  \end{itemize}
+  
 \end{itemize}
 \end{frame}
 
@@ -400,6 +405,16 @@ mattermost-desktop
 \end{verbatim} 
   \end{itemize}
 \end{frame}
+\section{Classes nader bezien}
+\begin{frame}
+\frametitle{Classes nader bezien}
+De volgorde van de classes is belangrijk:
+\begin{itemize}
+  \item<2-> Eerst de afhankelijkheden   
+  \item<3-> Bij meerdere files van verschillende classes, bepaalt de volgorde welke file het wordt. De laatste wint. Zie \href{https://fai-project.org/doc/man/fcopy.html}{\texttt{man fcopy}}
+  \item<4-> Bij variabelen geldt hetzelfde
+\end{itemize}
+\end{frame}
 
 \section{Profielen}
 
@@ -431,8 +446,34 @@ Description: Gnome desktop met developer tools
 (...)
 Classes: INSTALL FAIBASE DEBIAN DUTCH CONSOLE_TWEAKS \
   ADVANCED_CLI_TOOLS TUX GNOME_CORE BACKGROUND \
-  FIREFOX MATTERMOST DEVELOPER 
+  FIREFOX DEVELOPER 
 \end{verbatim}
+\end{frame}
+
+\section{Verder lezen}
+\begin{frame}
+\frametitle{Verder lezen}
+\begin{itemize}
+  \item \href{https://fai-project.org/}{FAI project}
+  \item \href{https://fai-project.org/fai-guide/}{FAI Guide}
+  \item \href{https://github.com/slspeek/fai/}{Mijn FAI configuratie} i.h.b. 
+  de class \texttt{GNOME\_CORE} voor de \texttt{dconf} configuratie
+  \begin{itemize}
+    \item \href{https://github.com/slspeek/fai/blob/main/files/etc/dconf/db/local.d/00-favorite-apps/DEVELOPER}{\texttt{dconf} configuratie voor de favorieten}
+    \item \href{https://github.com/slspeek/fai/blob/main/files/etc/dconf/db/local.d/10-shortcuts/GNOME_CORE}{\texttt{dconf} configuratie voor de sneltoetsen}
+  \end{itemize}
+  \item \href{https://github.com/slspeek/fai-cmds/}{Mijn FAI commando's} om snel aan de slag te kunnen
+  \end{itemize}
+\end{frame}
+
+\section{Demo}
+\begin{frame}
+\frametitle{Demo}
+\begin{itemize}
+  \item Demo van FAI \texttt{live-simpel.iso} in \texttt{libvirt}
+  \item Boot van \texttt{live-gnome-compleet.iso}
+  \item Installatie van \texttt{gnome-minimaal} profiel
+\end{itemize}
 \end{frame}
 
 \section{Over deze presentatie}
