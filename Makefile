@@ -1,4 +1,4 @@
-MAINNAME=presentatie-fai
+MAINNAME=automatiseer-installatie-en-configuratie
 HANDOUT_NAME=$(MAINNAME)-handout
 BEAMER_NAME=$(MAINNAME)-beamer
 HANDOUT_PDF=$(HANDOUT_NAME).pdf

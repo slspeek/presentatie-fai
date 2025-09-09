@@ -3,7 +3,7 @@ name: Print
 on: push
 
 env:
-  MAINNAME: presentatie-fai
+  MAINNAME: automatiseer-installatie-en-configuratie
   
 jobs:
   print:
