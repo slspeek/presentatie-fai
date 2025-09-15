@@ -173,14 +173,17 @@ Voor Debian gebaseerde systemen zijn er een paar oplossingen:
 \frametitle{Vergelijking van mijn Preseed en FAI}
 \begin{table} % [htbp] suggests placement options: here, top, bottom, page
     \centering % Centers the table on the page
-    \caption{Vergelijking} % Table caption
-
     \begin{tabular}{lccccc} % Defines column alignment: l=left, c=center, r=right
         \toprule % Top rule (from booktabs package)
-        \textbf{Oplossing} & \textbf{Auto} & \textbf{Multiboot} & \textbf{User} & \textbf{Live}  & \textbf{Live persistentie}\\
+                              & Mijn preseed & FAI \\
         \midrule % Mid rule (from booktabs package)
-        Mijn preseed & \XSolid & \Checkmark & \Checkmark & \Checkmark & \Checkmark \\
-        FAI & \Checkmark & \XSolid & \XSolid & \Checkmark & \XSolid \\
+         \textbf{Automatisch} & \XSolid & \Checkmark \\
+         \textbf{Multiboot} & \Checkmark & \XSolid \\
+         \textbf{Gebruikersnaam} & \Checkmark & \XSolid \\
+         \textbf{Live}  & \Checkmark & \Checkmark \\
+         \textbf{Live persistentie} & \Checkmark & \XSolid \\
+         \textbf{Geen Webserver nodig} & \XSolid & \Checkmark \\
+          
         \bottomrule % Bottom rule (from booktabs package)
     \end{tabular}
 \end{table}
@@ -190,6 +193,7 @@ Voor Debian gebaseerde systemen zijn er een paar oplossingen:
 \frametitle{Motivatie voor FAI}
 Nadelen van \href{https://slspeek.github.io/debian/}{Mijn Preseed}:
 \begin{itemize}
+  \item Webserver nodig
   \item Bestanden meegeven moeilijk
   \item Moeilijk uitbreidbaar
   \item Amateuristische herbouw van FAI
