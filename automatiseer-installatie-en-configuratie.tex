@@ -24,7 +24,7 @@
 \setbeamercolor{structure}{fg=NLLGGOrange}
 
 \newcommand{\light}[1]{\textcolor{gray}{#1}}
-
+\newcommand{\reponame}{presentatie-fai}
 
 %------------------------------------------------------------
 %This block of code defines the information to appear in the
@@ -105,15 +105,22 @@
 \begin{frame}
 \frametitle{Steven L. Speek}
 \begin{itemize}
-  \item Debian gebruiker sinds Sarge (2005)
-  \item Actief bij \href{https://linux020.nl/}{Linux\textsuperscript{020}}
-  \item Ontwikkelaar in Python en Java  
-  \item Linux netwerkbeheerder
-  \item Docent Linux
-  \item Github: \url{https://github.com/slspeek}
-  \item Hardloper: Volg mij op \href{https://www.strava.com/athletes/123214921}{Strava}
+  \item<2-> Actief bij \href{https://linux020.nl/}{Linux\textsuperscript{020}}
+  \item<3-> Docent Linux bij \href{https://accscip.nl/}{Actief Computer Centrum Amsterdam}
+  \item<4-> Debian gebruiker sinds Sarge (2005)
+  \item<5-> Ontwikkelaar in Python en Java  
+  \item<6-> Linux netwerkbeheerder
+  \item<7-> Github: \url{https://github.com/slspeek}
+  \item<8-> Hardloper: Volg mij op \href{https://www.strava.com/athletes/123214921}{Strava}
 \end{itemize}
 
+\end{frame}
+
+\begin{frame}
+\frametitle{Download de handout}
+PDFs: \url{https://github.com/slspeek/\reponame/releases/latest}
+\centering
+\includegraphics[width=0.5\textwidth]{img/qr-release.png}
 \end{frame}
 %---------------------------------------------------------
 \section{Probleemstelling}
@@ -503,7 +510,7 @@ Gebruik de instructies in de \href{https://github.com/slspeek/fai-cmds/blob/main
 \begin{frame}
 \frametitle{Demo}
 \begin{itemize}
-  \item Demo van FAI \texttt{live-simpel.iso} in \texttt{libvirt}
+  \item Demo van FAI \texttt{live-simpel.iso} in \texttt{libvirt}(VM)
   \item Boot van \texttt{live-gnome-compleet.iso}
   \item Installatie van \texttt{gnome-minimaal} profiel
 \end{itemize}
@@ -514,8 +521,8 @@ Gebruik de instructies in de \href{https://github.com/slspeek/fai-cmds/blob/main
 \begin{frame}
 \frametitle{Over deze presentatie}
 \begin{itemize}
-  \item Broncode: \url{https://github.com/slspeek/presentatie-fai}
-  \item PDFs: \url{https://github.com/slspeek/presentatie-fai/releases/latest}
+  \item Broncode: \url{https://github.com/slspeek/\reponame}
+  \item PDFs: \url{https://github.com/slspeek/\reponame/releases/latest}
   \item Gemaakt met \href{https://nl.mirrors.cicku.me/ctan/macros/latex/contrib/beamer/doc/beameruserguide.pdf}{\LaTeX{} beamer}
   \item Experimenteren met \LaTeX{} beamer: \url{https://github.com/slspeek/empty-latex-beamer}
   \begin{itemize}
@@ -533,6 +540,12 @@ Gebruik de instructies in de \href{https://github.com/slspeek/fai-cmds/blob/main
   \item<2-> Opmerkingen?
   \item<3-> Verbeteringen?
 \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Volg mij op Strava}
+\centering
+\includegraphics[width=0.5\textwidth]{img/qr-follow-me-on-strava.png}
 \end{frame}
 
 \end{document}
