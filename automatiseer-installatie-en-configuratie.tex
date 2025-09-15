@@ -154,7 +154,7 @@ Voor Debian gebaseerde systemen zijn er een paar oplossingen:
   \end{itemize}
   \item \href{https://fai-project.org/}{FAI - Fully Automatic Installation}
   \begin{itemize}
-     \item Zeer volwassen project
+     \item Zeer volwassen project (sinds 1999)
      \item Goed ontwerp
      \item \href{https://slspeek.github.io/fai/}{Mijn FAI configuratie}
      \item \href{https://slspeek.github.io/fai-cmds/}{Mijn FAI commando's} 
@@ -225,10 +225,10 @@ Draai FAI vanuit het late-command in een preseed.
   \item Automatische installatie van Linux systemen
   \item \textbf{Debian}, Ubuntu, Mint, CentOS, Rocky Linux, AlmaLinux, ...
   \item Netwerk installatie
-  \item \textbf{Live installatie}
-  \item Herinstallatie
   \item \textbf{USB installatie}
   \item Chroot installatie
+  \item \textbf{Live installatie}
+  \item Bijwerken van met FAI gemaakte systemen
 \end{itemize}
 \end{frame}
 
@@ -288,7 +288,7 @@ Configuratie is een map met:
   \item<3-> \texttt{files/} - (Configuratie) bestanden
   \item<4-> \texttt{scripts/} - Scripts
   \item<5-> \texttt{hooks/} - Hooks
-  \item<6-> \light{\texttt{debconf/} - Debconf antwoorden}
+  \item<6-> \texttt{debconf/} - Debconf antwoorden
   \item<6-> \light{\texttt{disk\_config/} - Disklayouts}
   \item<6-> \light{\texttt{basefiles/} - Basis bestanden archief}
   \item<6-> \light{\texttt{pkgs/} - Lokale pakketten}
@@ -506,7 +506,6 @@ Gebruik de instructies in de \href{https://github.com/slspeek/fai-cmds/blob/main
     \item \href{https://github.com/slspeek/fai/blob/main/files/etc/dconf/db/local.d/10-shortcuts/GNOME_CORE}{\texttt{dconf} configuratie voor de sneltoetsen}
     \item \href{https://github.com/slspeek/fai/blob/main/files/etc/dconf/db/local.d/40-gnome-extensions/GNOME_EXTENSIONS}{\texttt{dconf} configuratie voor de extensies}
   \end{itemize}
-  \item \href{https://github.com/slspeek/fai-cmds/}{Mijn FAI commando's} om snel aan de slag te kunnen
   \end{itemize}
 \end{frame}
 
@@ -515,8 +514,8 @@ Gebruik de instructies in de \href{https://github.com/slspeek/fai-cmds/blob/main
 \frametitle{Demo}
 \begin{itemize}
   \item Demo van FAI \texttt{live-simpel.iso} in \texttt{libvirt}(VM)
-  \item Boot van \texttt{live-gnome-compleet.iso}
   \item Installatie van \texttt{gnome-minimaal} profiel
+  \item Boot van \texttt{live-gnome-compleet.iso}
 \end{itemize}
 \end{frame}
 
@@ -525,9 +524,9 @@ Gebruik de instructies in de \href{https://github.com/slspeek/fai-cmds/blob/main
 \begin{frame}
 \frametitle{Over deze presentatie}
 \begin{itemize}
+  \item Gemaakt met \href{https://nl.mirrors.cicku.me/ctan/macros/latex/contrib/beamer/doc/beameruserguide.pdf}{\LaTeX{} beamer}
   \item Broncode: \url{https://github.com/slspeek/\reponame}
   \item PDFs: \url{https://github.com/slspeek/\reponame/releases/latest}
-  \item Gemaakt met \href{https://nl.mirrors.cicku.me/ctan/macros/latex/contrib/beamer/doc/beameruserguide.pdf}{\LaTeX{} beamer}
   \item Experimenteren met \LaTeX{} beamer: \url{https://github.com/slspeek/empty-latex-beamer}
   \begin{itemize}
     \item Productie van PDFs via \LaTeX{} dockerimage
