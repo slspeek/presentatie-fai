@@ -4,7 +4,8 @@ BEAMER_NAME=$(MAINNAME)-beamer
 HANDOUT_PDF=$(HANDOUT_NAME).pdf
 BEAMER_PDF=$(BEAMER_NAME).pdf
 LATEX_IMAGE=leplusorg/latex:sha-4a17317
-PDFLATEX=docker run --rm -t --workdir=/tmp --user="$(shell id -u):$(shell id -g)" --net=none  -v "$(shell pwd):/tmp"  $(LATEX_IMAGE) pdflatex --interaction batchmode
+PDFLATEX_FLAGS=--interaction batchmode
+PDFLATEX=docker run --rm -t --workdir=/tmp --user="$(shell id -u):$(shell id -g)" --net=none  -v "$(shell pwd):/tmp"  $(LATEX_IMAGE) pdflatex $(PDFLATEX_FLAGS)
 BEAMER_CMD=$(PDFLATEX) -jobname=$(BEAMER_NAME) $(MAINNAME).tex
 HANDOUT_CMD=$(PDFLATEX) -jobname=$(HANDOUT_NAME) "\PassOptionsToClass{handout}{beamer}\input{$(MAINNAME)}"
 
