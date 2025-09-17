@@ -23,7 +23,8 @@ $(HANDOUT_PDF): $(MAINNAME).tex
 		$(HANDOUT_CMD)
 		$(HANDOUT_CMD)
 
-viewhandout: $(HANDOUT_PDF)
+viewhandout: 
+		$(HANDOUT_CMD)
 		open $(HANDOUT_PDF)
 	
 viewbeamer: 
