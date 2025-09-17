@@ -24,7 +24,8 @@ $(HANDOUT_PDF): $(MAINNAME).tex
 viewhandout: $(HANDOUT_PDF)
 		open $(HANDOUT_PDF)
 	
-viewbeamer: $(BEAMER_PDF)
+viewbeamer: 
+		$(BEAMER_CMD)
 		open $(BEAMER_PDF)
 
 clean:
