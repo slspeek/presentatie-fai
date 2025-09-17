@@ -16,10 +16,12 @@ default: viewbeamer
 all: $(BEAMER_PDF) $(HANDOUT_PDF)
 
 $(BEAMER_PDF): $(MAINNAME).tex
-		$(BEAMER_CMD); $(BEAMER_CMD)
+		$(BEAMER_CMD)
+		$(BEAMER_CMD)
 
 $(HANDOUT_PDF): $(MAINNAME).tex
-		$(HANDOUT_CMD); $(HANDOUT_CMD)
+		$(HANDOUT_CMD)
+		$(HANDOUT_CMD)
 
 viewhandout: $(HANDOUT_PDF)
 		open $(HANDOUT_PDF)
