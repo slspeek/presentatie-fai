@@ -132,7 +132,7 @@ Na een Linux installatie ga je telkens een paar dingetjes aanpassen:
   \item Elements installeren
   \item VLC installeren
   \item Gnome Tweaks installeren
-  \item Mooie BASH prompt, met foutmeldingen, configureren
+  \item BASH prompt, met foutmeldingen, configureren
   \item Sneltoetsen instellen
   \item Mooie background instellen
   \item Enzovoorts
@@ -257,7 +257,7 @@ Draai FAI vanuit het late-command in een preseed.
 
 
 \begin{frame}
-\frametitle{Dingetjes automatiseren in FAI}
+\frametitle{Zaken automatiseren in FAI}
 Een \textbf{CLASS} kan bestaan uit:
 \begin{itemize} 
   \item Verseisten dat bepaalde CLASSES zijn gedraaid
@@ -297,49 +297,26 @@ Configuratie is een map met:
 \onslide<7->{Zie voor meer details de \href{https://fai-project.org/fai-guide/\#_a_id_c3_a_the_configuration_space_and_its_subdirectories}{FAI Guide over de configuratie}}
 \end{frame}
 
-\begin{frame}
-\frametitle{FAI fasen}
-\begin{itemize}
-  \item<2-> \light{\textsc{confdir} - get the config space}
-  \item<2-> \light{\textsc{setup}                 - some initialization, start sshd on demand}
-  \item<2-> \textsc{defclass}              - define FAI classes
-  \item<2-> \textsc{defvar}                - define variables
-  \item<3-> \light{\textsc{action}                - evaluate FAI\_ACTION}
-  \item<3-> \light{\textsc{install}               - Start the installation}
-  \item<3-> \textsc{partition}             - partition the harddisks, create file systems
-  \item<4-> \light{\textsc{mountdisks}            - mount the file systems}
-  \item<4-> \light{\textsc{extrbase}              - extract the base.tar.xz}
-  \item<4-> \textsc{debconf}               - do the Debian debconf preseeding
-  \item<5-> \light{\textsc{repository}            - prepare access to the package repository}
-  \item<5-> \light{\textsc{updatebase}            - Set up package tools and update packages}
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{FAI fasen (vervolg)}
-\begin{itemize}
-  \item \textbf{\textsc{instsoft}              - install software packages}
-  \item<2-> \textbf{\textsc{configure}             - call customization scripts}
-  \item<3-> \light{\textsc{finish}                - do some cleanup, show installation statistics}
-  \item<3-> \textsc{tests}                 - call tests if defined
-  \item<3-> \light{\textsc{chboot}                - call fai-chboot on the install server}
-  \item<3-> \light{\textsc{savelog}               - save log files to local and remote location}
-  \item<3-> \light{\textsc{faiend}                - reboot host, eject CD if needed}
-\end{itemize}
-\end{frame}
-
 \section{Voorbeelden van classes}
 
 
 \begin{frame}[fragile]
 \frametitle{Voorbeeld FANCY\_BASH\_PROMPT}
- 
-\textbf{Probleem:} \texttt{/etc/bash.bashrc} moet worden aangepast
+\textbf{Probleem:} 
+Je wilt een mooie BASH prompt, die ook aangeeft of het laatste commando goed ging of niet
+\begin{verbatim}
+user@host:~$ (exit 42)
+user@host:~(42)* true
+user@host:~$
+\end{verbatim}
 
-\onslide<2->{\textbf{Oplossing:}}
+ 
+\onslide<2->{\textbf{Conceptuele oplossing:} \texttt{/etc/bash.bashrc} moet worden aangepast}
+
+\onslide<3->{\textbf{Oplossing:}}
 \begin{itemize}
-  \item<2-> Maak een bestand \texttt{files/etc/bash.bashrc/FANCY\_BASH\_PROMPT} met de aanpassingen
-  \item<3-> Maak een script \texttt{scripts/FANCY\_BASH\_PROMPT/10-copy-file} met:
+  \item<4-> Maak een bestand \href{https://github.com/slspeek/fai/blob/main/files/etc/bash.bashrc/FANCY_BASH_PROMPT}{\texttt{files/etc/bash.bashrc/FANCY\_BASH\_PROMPT}} met de aanpassingen
+  \item<5-> Maak een script \texttt{scripts/FANCY\_BASH\_PROMPT/10-copy-file} met:
   \begin{verbatim}#!/bin/bash
 fcopy -M /etc/bash.bashrc
   \end{verbatim} 
@@ -419,16 +396,60 @@ mattermost-desktop
 \end{frame}
 
 \begin{frame}
-\frametitle{Classes nader bezien}
-De volgorde van de classes is belangrijk:
+\frametitle{Volgorde van classes}
 \begin{itemize}
   \item<2-> Eerst de afhankelijkheden   
-  \item<3-> Bij meerdere files van verschillende classes, bepaalt de volgorde welke file het wordt. De laatste wint. Zie \href{https://fai-project.org/doc/man/fcopy.html}{\texttt{man fcopy}}
-  \item<4-> Bij variabelen geldt hetzelfde
+  \item<3-> Bij variabelen geldt dat de waarde gezet in de laatste class wint
+  \item<4-> Bij scripts en hooks geldt dat alle scripts worden uitgevoerd in de volgorde van de classes
+  \item<5-> Bij meerdere files van verschillende classes, bepaalt de volgorde welke file het wordt. De laatste wint. Zie \href{https://fai-project.org/doc/man/fcopy.html}{\texttt{man fcopy}}
 \end{itemize}
 \end{frame}
 
+\begin{frame}
+\frametitle{Abstract voorbeeld}
+Een FAI installatie met de classes: \texttt{CLASS\_A CLASS\_B CLASS\_C}, waarbij \texttt{CLASS\_B} 
+afhankelijk is van \texttt{CLASS\_B\_1} en \texttt{CLASS\_B\_2}
+
+\begin{itemize}
+  \item<2-> \textsc{defclass}
+  \begin{itemize}
+    \item leest \texttt{classes/CLASS\_B.deps} en voegt \texttt{CLASS\_B\_1} en \texttt{CLASS\_B\_2} voor \texttt{CLASS\_B} in
+    \item resultaat: \texttt{CLASS\_A CLASS\_B\_1 CLASS\_B\_2 CLASS\_B CLASS\_C}
+  \end{itemize}
+  \item<3-> \textsc{defvar}
+  \begin{itemize}
+    \item source \texttt{classes/CLASS\_A.var}
+    \item source \texttt{classes/CLASS\_B\_1.var}
+    \item source \texttt{classes/CLASS\_B\_2.var}
+    \item source \texttt{classes/CLASS\_B.var}
+    \item source \texttt{classes/CLASS\_C.var}
+  \end{itemize}
+  \item<4-> \textsc{instsoft}
+  \begin{itemize}
+    \item pakketten uit \texttt{packages\_config/} worden ge\"{i}nstalleerd voor
+     \texttt{CLASS\_A CLASS\_B\_1 CLASS\_B\_2 CLASS\_B CLASS\_C}
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Abstract voorbeeld (vervolg)}
+\begin{itemize}
+  \item \textsc{configure}
+  \begin{itemize}
+    \item scripts uit \texttt{scripts/CLASS\_A/} worden uitgevoerd
+    \item scripts uit \texttt{scripts/CLASS\_B\_1/} worden uitgevoerd
+    \item scripts uit \texttt{scripts/CLASS\_B\_2/} worden uitgevoerd
+    \item scripts uit \texttt{scripts/CLASS\_B/} worden uitgevoerd
+    \item scripts uit \texttt{scripts/CLASS\_C/} worden uitgevoerd
+  \end{itemize}
+  Bij \texttt{fcopy} commando's geldt dat de file van de laatste class wint.
+\end{itemize}
+\end{frame}
+
+
 \section{Profielen}
+
 
 \begin{frame}
 \frametitle{Profielen}
