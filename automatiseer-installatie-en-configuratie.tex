@@ -25,6 +25,9 @@
 
 \newcommand{\light}[1]{\textcolor{gray}{#1}}
 \newcommand{\reponame}{presentatie-fai}
+\newcommand{\myfaiconfig}{https://github.com/slspeek/fai}
+\newcommand{\myfaicmds}{https://github.com/slspeek/fai-cmds}
+\newcommand{\mypreseed}{https://slspeek.github.io/debian/}
 
 %------------------------------------------------------------
 %This block of code defines the information to appear in the
@@ -129,7 +132,7 @@ Na een Linux installatie ga je telkens een paar dingetjes aanpassen:
 \begin{itemize}
   \item Upstream Firefox installeren
   \item Mattermost installeren
-  \item Elements installeren
+  \item Element installeren
   \item VLC installeren
   \item Gnome Tweaks installeren
   \item BASH prompt, met foutmeldingen, configureren
@@ -152,14 +155,14 @@ Voor Debian gebaseerde systemen zijn er een paar oplossingen:
     \item Eenvoudig
     \item Beperkt
     \item Alleen voor installatie
-    \item \href{https://slspeek.github.io/debian/}{Mijn preseed bestanden}
+    \item \href{\mypreseed}{Mijn preseed bestanden}
   \end{itemize}
   \item \href{https://fai-project.org/}{FAI - Fully Automatic Installation}
   \begin{itemize}
      \item Zeer volwassen project (sinds 1999)
      \item Goed ontwerp
-     \item \href{https://slspeek.github.io/fai/}{Mijn FAI configuratie}
-     \item \href{https://slspeek.github.io/fai-cmds/}{Mijn FAI commando's} 
+     \item \href{\myfaiconfig}{Mijn FAI configuratie}
+     \item \href{\myfaicmds}{Mijn FAI commando's} 
   \end{itemize}
   \item \href{https://ansible.com/}{Ansible}
   \begin{itemize}
@@ -193,7 +196,7 @@ Voor Debian gebaseerde systemen zijn er een paar oplossingen:
 
 \begin{frame}
 \frametitle{Motivatie voor FAI}
-Nadelen van \href{https://slspeek.github.io/debian/}{Mijn Preseed}:
+Nadelen van \href{\mypreseed}{Mijn Preseed}:
 \begin{itemize}
   \item Webserver nodig
   \item Bestanden meegeven moeilijk
@@ -242,13 +245,13 @@ Draai FAI vanuit het late-command in een preseed.
   \item FAI software
   \begin{itemize}
     \item Canoniek \url{https://fai-project.org}
-    \item Persoonlijk \url{https://github.com/slspeek/fai-cmds} toegespitst op USB
+    \item Persoonlijk \url{\myfaicmds} toegespitst op USB
      installaties en live systemen
   \end{itemize}
   \item FAI configuratie
   \begin{itemize}
     \item Canoniek \url{https://github.com/faiproject/fai-config}
-    \item Persoonlijk \url{https://slspeek.github.io/fai/} met Nederlandse GNOME configuraties
+    \item Persoonlijk \url{\myfaiconfig} met Nederlandse GNOME configuraties
   \end{itemize}
 \end{itemize}
 \end{frame}
@@ -315,7 +318,7 @@ user@host:~$
 
 \onslide<3->{\textbf{Oplossing:}}
 \begin{itemize}
-  \item<4-> Maak een bestand \href{https://github.com/slspeek/fai/blob/main/files/etc/bash.bashrc/FANCY_BASH_PROMPT}{\texttt{files/etc/bash.bashrc/FANCY\_BASH\_PROMPT}} met de aanpassingen
+  \item<4-> Maak een bestand \href{\myfaiconfig/blob/main/files/etc/bash.bashrc/FANCY_BASH_PROMPT}{\texttt{files/etc/bash.bashrc/FANCY\_BASH\_PROMPT}} met de aanpassingen
   \item<5-> Maak een script \texttt{scripts/FANCY\_BASH\_PROMPT/10-copy-file} met:
   \begin{verbatim}#!/bin/bash
 fcopy -M /etc/bash.bashrc
@@ -340,7 +343,7 @@ fcopy -M /etc/bash.bashrc
   \begin{verbatim}PACKAGES install
 unattended-upgrades
   \end{verbatim} 
-  \item<3-> Maak een bestand \texttt{files/debconf/UNATTENDED\_UPGRADES} met:
+  \item<3-> Maak een bestand \texttt{debconf/UNATTENDED\_UPGRADES} met:
   \begin{verbatim}unattended-upgrades \
     unattended-upgrades/enable_auto_updates \
       boolean true
@@ -487,7 +490,7 @@ Classes: INSTALL FAIBASE DEBIAN DUTCH CONSOLE_TWEAKS \
 \begin{frame}
 \frametitle{Mijn FAI repositories}
 \begin{itemize}
-  \item \href{https://github.com/slspeek/fai/}{Mijn FAI configuratie}
+  \item \href{\myfaiconfig/}{Mijn FAI configuratie}
   \begin{itemize}
     \item Profielen voor:
     \begin{itemize}
@@ -500,7 +503,7 @@ Classes: INSTALL FAIBASE DEBIAN DUTCH CONSOLE_TWEAKS \
     \item Nederlandse locale
     \item Eenvoudiger dan \url{https://github.com/faiproject/fai-config} (de canonieke FAI configuratie)
   \end{itemize}
-  \item \href{https://github.com/slspeek/fai-cmds/}{Mijn FAI commando's}
+  \item \href{\myfaicmds/}{Mijn FAI commando's}
   \begin{itemize}
     \item \texttt{Makefile} om snel aan de slag te kunnen
     \begin{itemize}
@@ -512,7 +515,7 @@ Classes: INSTALL FAIBASE DEBIAN DUTCH CONSOLE_TWEAKS \
     \end{itemize}
   \end{itemize}
 \end{itemize}
-Gebruik de instructies in de \href{https://github.com/slspeek/fai-cmds/blob/main/README.md}{README.md}
+Gebruik de instructies in de \href{\myfaicmds/blob/main/README.md}{README.md}
 \end{frame}
 
 \begin{frame}
@@ -520,18 +523,14 @@ Gebruik de instructies in de \href{https://github.com/slspeek/fai-cmds/blob/main
 \begin{itemize}
   \item \href{https://fai-project.org/}{FAI project}
   \item \href{https://fai-project.org/fai-guide/}{FAI Guide}
-  \item \href{https://github.com/slspeek/fai/}{Mijn FAI configuratie} i.h.b. 
+  \item \href{\myfaiconfig/}{Mijn FAI configuratie} i.h.b. 
   de class \texttt{GNOME\_CORE} voor de \texttt{dconf} configuratie
   \begin{itemize}
-    \item \href{https://github.com/slspeek/fai/blob/main/files/etc/dconf/db/local.d/00-favorite-apps/DEVELOPER}{\texttt{dconf} configuratie voor de favorieten}
-    \item \href{https://github.com/slspeek/fai/blob/main/files/etc/dconf/db/local.d/10-shortcuts/GNOME_CORE}{\texttt{dconf} configuratie voor de sneltoetsen}
-    \item \href{https://github.com/slspeek/fai/blob/main/files/etc/dconf/db/local.d/40-gnome-extensions/GNOME_EXTENSIONS}{\texttt{dconf} configuratie voor de extensies}
+    \item \href{\myfaiconfig/blob/main/files/etc/dconf/db/local.d/00-favorite-apps/DEVELOPER}{\texttt{dconf} configuratie voor de favorieten}
+    \item \href{\myfaiconfig/blob/main/files/etc/dconf/db/local.d/10-shortcuts/GNOME_CORE}{\texttt{dconf} configuratie voor de sneltoetsen}
+    \item \href{\myfaiconfig/blob/main/files/etc/dconf/db/local.d/40-gnome-extensions/GNOME_EXTENSIONS}{\texttt{dconf} configuratie voor de extensies}
   \end{itemize}
-  \item Probeer het zelf uit met al gemaakte ISO's:
-  \begin{itemize}
-    \item \href{https://mega.nz/file/TE8XWAzA\#gtv1uKtn6BQc_yGHdHBH0EyYe90PIDSq49tcnSwj1iI}{\texttt{fai-cd-mirror.iso}} FAI installatie ISO met mirror
-    \item \href{https://mega.nz/file/OYVCHSQC\#-JoJz0aZdVl_ArLC3NAudJnqwwC8qzex0l865wZ6Cg4}{\texttt{live-gnome-compleet.iso}} live ISO voor GNOME compleet profiel
-  \end{itemize}
+  \item Ga aan de slag met de instructies uit de \href{\myfaicmds/blob/main/README.md}{README.md}
 \end{itemize}
 \end{frame}
 
