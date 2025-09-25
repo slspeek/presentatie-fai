@@ -8,10 +8,23 @@ PDFLATEX_FLAGS=--interaction batchmode
 PDFLATEX=docker run --rm -t --workdir=/tmp --user="$(shell id -u):$(shell id -g)" --net=none  -v "$(shell pwd):/tmp"  $(LATEX_IMAGE) pdflatex $(PDFLATEX_FLAGS)
 BEAMER_CMD=$(PDFLATEX) -jobname=$(BEAMER_NAME) $(MAINNAME).tex
 HANDOUT_CMD=$(PDFLATEX) -jobname=$(HANDOUT_NAME) "\PassOptionsToClass{handout}{beamer}\input{$(MAINNAME)}"
+SPELLCHECK_CMD=aspell check -t -p $(PWD)/aspell.ignore.list -l nl $(MAINNAME).tex
+LINKCHECK_CMD=$(HOME)/.local/bin/pdfx -c $(BEAMER_PDF)
 
-.PHONY: all clean viewbeamer viewhandout
+.PHONY: all clean viewbeamer viewhandout spellcheck
 
 default: viewbeamer
+
+install_deps:
+		sudo apt update
+		sudo apt install -y aspell aspell-nl pipx
+		pipx install pdfx
+
+spellcheck:
+		$(SPELLCHECK_CMD)
+
+linkcheck: $(BEAMER_PDF)
+		$(LINKCHECK_CMD)
 
 all: $(BEAMER_PDF) $(HANDOUT_PDF)
 
